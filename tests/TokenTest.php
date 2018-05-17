@@ -23,4 +23,11 @@ class TokenTest extends TestCase
         $this->assertEquals('T_PLUS', $token->getName());
         $this->assertEquals(1, $token->getLine());
     }
+
+    public function testToString()
+    {
+        $token = new Token('+', 'T_PLUS', 1);
+
+        $this->assertEquals("[\n name: T_PLUS\n value:+\n line: 1\n]", (string) $token);
+    }
 }

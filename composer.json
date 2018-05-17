@@ -15,8 +15,14 @@
     "require": {
         "php": ">=7.1"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    },
     "autoload": {
         "psr-4": { "Yosymfony\\ParserUtils\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Yosymfony\\ParserUtils\\Test\\": "tests/" }
     },
     "extra": {
         "branch-alias": {

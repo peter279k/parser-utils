@@ -32,6 +32,16 @@ class BasicLexerTest extends TestCase
         ], $tokens);
     }
 
+    /**
+     * @expectedException Yosymfony\ParserUtils\SyntaxErrorException
+     * @expectedExceptionMessage Lexer error: unable to parse " " at line 2.
+     */
+    public function testTokenizeOnInvalidLexerString()
+    {
+        $lexer = new BasicLexer([]);
+        $lexer->tokenize("\n \n \n \n");
+    }
+
     public function testTokenizeMustReturnsTheListOfTokensWithoutThoseDoNotHaveParenthesizedSupatternInTerminalSymbols()
     {
         $lexer = new BasicLexer([
@@ -123,5 +133,29 @@ class BasicLexerTest extends TestCase
 
         $this->assertEquals('T_MY_EOS', $token->getName());
         $this->assertFalse($ts->hasPendingTokens());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage The name of the newline token must be not empty.
+     */
+    public function testSetNewlineTokenNameOnEmptyName()
+    {
+        $lexer = new BasicLexer([
+            '/^([0-9]+)/' => 'T_NUMBER',
+        ]);
+        $lexer->setNewlineTokenName('');   
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage The name of the EOS token must be not empty.
+     */
+    public function testSetEosTokenNameOnEmptyName()
+    {
+        $lexer = new BasicLexer([
+            '/^([0-9]+)/' => 'T_NUMBER',
+        ]);
+        $lexer->setEosTokenName('');   
     }
 }

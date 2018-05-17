@@ -109,6 +109,20 @@ class TokenStreamTest extends TestCase
         $this->assertTrue($ts->isNext('T_NUMBER'));
     }
 
+    public function testIsNextShouldReturnFalse()
+    {
+        $ts = new TokenStream([
+            new Token('+', 'T_PLUS', 1),
+            new Token('1', 'T_NUMBER', 1),
+        ]);
+
+        $ts->moveNext();
+        $ts->moveNext();
+        $ts->moveNext();
+
+        $this->assertFalse($ts->isNext('invalid_token_name'));
+    }
+
     public function testIsNextMustReturnsTrueWhenTheNameOfNextTokenMatchWithTheNamePassedAtTheBeginning()
     {
         $ts = new TokenStream([
